@@ -8,8 +8,11 @@ public class Training2 {
     }
 
     public Training2(){
+        // 1
         Function<Long,Long> func = x -> x + 1;
         System.out.println(String.format("result:%d",func.apply(12L)));
+
+        // 2
         Supplier<DateFormat> supplier = () -> new SimpleDateFormat("dd-MM-YYYY");
         int i = 0;
         while ( i++ < 10 ) {
