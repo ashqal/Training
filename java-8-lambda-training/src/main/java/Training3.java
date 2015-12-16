@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -13,9 +14,17 @@ public class Training3 {
         private String name;
         private String country;
 
+        private List<Artist> members;
+
         public Artist(String name, String country) {
             this.name = name;
             this.country = country;
+            members = new ArrayList<>();
+        }
+
+        public Artist addMember(Artist artist){
+            members.add(artist);
+            return Artist.this;
         }
 
         public String getName() {
@@ -32,6 +41,19 @@ public class Training3 {
 
         public void setCountry(String country) {
             this.country = country;
+        }
+
+        public Stream<Artist> getMembers() {
+            return members.stream();
+        }
+
+        @Override
+        public String toString() {
+            return "Artist{" +
+                    "name='" + name + '\'' +
+                    ", country='" + country + '\'' +
+                    ", members:" + members.size() +
+                    '}';
         }
     }
 
@@ -58,14 +80,17 @@ public class Training3 {
     }
 
     public Training3() {
+        System.out.println("====== 1");
         // 1.a
         List<Integer> values = asList(1,2,3,4);
         System.out.println(addUp(values.stream()));
 
         // 1.b
-        List<Artist> artists = asList(new Artist("Asha","China")
+        List<Artist> artists = asList(
+                new Artist("Asha","China").addMember(new Artist("zz","China")).addMember(new Artist("dachui","hangzhou"))
                 , new Artist("Jay Chou","China Taiwan")
-                , new Artist("Eason Chen","HK"));
+                , new Artist("Eason Chen","HK").addMember(new Artist("Linxi","HK"))
+        );
         List<String> details = artistDetail(artists);
         System.out.println(details);
 
@@ -76,6 +101,28 @@ public class Training3 {
                 , new Album("Go away",3));
         List<Album> eps = albums.stream().filter(album -> album.getLength() <= 3 ).collect(toList());
         System.out.println(eps);
+
+        System.out.println("====== 2");
+        // 2
+        int totalMembers = 0;
+        for( Artist artist : artists ){
+            Stream<Artist> members = artist.getMembers();
+            int count = (int) members.count();
+            System.out.println(artist.toString() );
+            totalMembers += count;
+        }
+        System.out.println(totalMembers);
+
+        totalMembers = artists.stream()
+                .map( artist -> artist.getMembers().count() )
+                .reduce(0L, Long::sum ).intValue();
+        System.out.println(totalMembers);
+
+        System.out.println("====== 4");
+        // 4
+
+
+
 
     }
 
