@@ -1,5 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
@@ -102,7 +102,7 @@ public class Training3 {
         List<Album> eps = albums.stream().filter(album -> album.getLength() <= 3 ).collect(toList());
         System.out.println(eps);
 
-        System.out.println("====== 2");
+        System.out.println("\n====== 2");
         // 2
         int totalMembers = 0;
         for( Artist artist : artists ){
@@ -118,12 +118,34 @@ public class Training3 {
                 .reduce(0L, Long::sum ).intValue();
         System.out.println(totalMembers);
 
-        System.out.println("====== 4");
-        // 4
+        System.out.println("\n====== 5");
+        AtomicInteger count = new AtomicInteger(0);
+        artists.stream().forEach( artist -> count.incrementAndGet() );
+        System.out.println("count:" + count.get());
+
+        System.out.println("\n====== 6");
+        // 6 计算一个字符串中小写字母的个数
+        String str1 = "I love the world. He he";
+        String str2 = "I love the world.";
+        long num = countLowerCase(str1);
+        System.out.println(str1 + ":" + num);
+
+        //Optional<String> what;
+        // 7
+        System.out.println("\n====== 7");
+        List<String> strList = Arrays.asList(str1,str2);
+        Optional tmp = strList.stream().max( (a,b) -> countLowerCase(a) - countLowerCase(b) );
+        System.out.println(tmp);
+
+        // 3.10 1
+        System.out.println("\n====== 3.10 1");
+        //Stream.of(90,100);
 
 
+    }
 
-
+    private int countLowerCase(String str){
+        return (int) str.chars().filter(c -> c >='a' && c <= 'z' ).count();
     }
 
     private List<String> artistDetail(List<Artist> artists){
