@@ -10,7 +10,7 @@ import static java.util.stream.Collectors.toList;
  *
  */
 public class Training3 {
-    public class Artist {
+    public static class Artist {
         private String name;
         private String country;
 
