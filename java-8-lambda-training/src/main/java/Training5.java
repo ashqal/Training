@@ -1,11 +1,13 @@
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.maxBy;
 
 /**
@@ -39,7 +41,10 @@ public class Training5 {
         longestName = nameList.stream().collect(maxBy(Comparator.comparing(String::length)));
         System.out.println(longestName.orElse("unknown"));
 
-
+        System.out.println("\n====== 5.6 2 b");
+        Stream<String> names = Stream.of("John","Paul","George","John","Paul","John");
+        Map<String,Long> map = names.collect(groupingBy(name->name,counting()));
+        System.out.println(map);
     }
 
     public static void main(String[] args) {
